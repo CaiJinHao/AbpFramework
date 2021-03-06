@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Dapper" Version="4.0.2" />
+    <PackageReference Include="Volo.Abp.Data" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

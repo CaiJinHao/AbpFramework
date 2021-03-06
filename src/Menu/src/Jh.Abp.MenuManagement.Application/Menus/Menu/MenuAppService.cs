@@ -1,17 +1,11 @@
-﻿using Jh.Abp.Domain.Extensions;
+﻿using Jh.Abp.Application.Contracts.Extensions;
 using Jh.Abp.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Uow;
-using Jh.Abp.Application.Contracts.Extensions;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -26,6 +20,7 @@ namespace Jh.Abp.MenuManagement.Menus
 
         private IMenuAndRoleMapAppService _menuAndRoleMapAppService;
         public IMenuAndRoleMapAppService menuAndRoleMapAppService => LazyGetRequiredService(ref _menuAndRoleMapAppService);
+        public ITestRepository testRepository { get; set; }
 
         public MenuAppService(IMenuRepository repository, IMenuDapperRepository menuDapperRepository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
         {
@@ -69,6 +64,12 @@ namespace Jh.Abp.MenuManagement.Menus
             if (data != null)
             {
                 var c = menuRepository.GetDapperListAsync().Result;
+            }*/
+            // 多数据库连接测试
+            /*var data= await testRepository.GetEmailsAsync();
+            if (data!=null)
+            {
+
             }*/
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
