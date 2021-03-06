@@ -3,7 +3,8 @@ using Jh.Abp.MenuManagement.Menus;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
-
+using Volo.Abp.Identity;
+using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
@@ -22,17 +23,46 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
-            builder.Entity<Menu>(b => {
+            builder.Entity<Menu>(b =>
+            {
                 b.ConfigureByConvention();
             });
 
-            builder.Entity<MenuAndRoleMap>(b => {
+            builder.Entity<MenuAndRoleMap>(b =>
+            {
                 b.ConfigureByConvention();
                 b.Property(p => p.Id).ValueGeneratedOnAdd();
 
                 b.HasOne(mrm => mrm.Menu).WithMany(menu => menu.MenuRoleMaps).HasForeignKey(menu => menu.MenuId);
                 b.HasIndex(c => c.RoleId).IncludeProperties(p => p.MenuId);//mysql不能使用包含列
             });
+
+            builder.Entity<MyUsers>(b =>
+            {
+                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+
+                b.ConfigureByConvention();
+
+                b.Property(x => x.Avatar).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Avatar));
+                b.Property(x => x.Introduction).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Introduction));
+
+            });
+
+            ObjectExtensionManager.Instance
+                .MapEfCoreProperty<IdentityUser, string>(
+                    nameof(MyUsers.Avatar),
+                    (entityBuilder, propertyBuilder) =>
+                    {
+                        propertyBuilder.HasMaxLength(500);
+                    }
+                )
+                .MapEfCoreProperty<IdentityUser, string>(
+                    nameof(MyUsers.Introduction),
+                    (entityBuilder, propertyBuilder) =>
+                    {
+                        propertyBuilder.HasMaxLength(500);
+                    }
+                );
         }
     }
 }
