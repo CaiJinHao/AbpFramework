@@ -16,6 +16,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
     )]
     public class MenuManagementEntityFrameworkCoreModule : AbpModule
     {
+        //IdentityServer 中调用
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
             MenuManagementEfCoreEntityExtensionMappings.Configure();

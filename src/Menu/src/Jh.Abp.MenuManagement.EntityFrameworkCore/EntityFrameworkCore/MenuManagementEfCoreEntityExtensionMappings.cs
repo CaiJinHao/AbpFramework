@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.MenuManagement.ObjectExtensions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Identity;
@@ -39,24 +40,24 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
                 ObjectExtensionManager.Instance
                 .MapEfCoreProperty<IdentityUser, int>(
-                    nameof(MyUsers.PlatformType),
+                   IdentityUserExtension.PlatformType,
                     (entityBuilder, propertyBuilder) =>
                     {
                         propertyBuilder.IsRequired();
                     }
                 )
                 .MapEfCoreProperty<IdentityUser, string>(
-                    nameof(MyUsers.Avatar),
+                    IdentityUserExtension.Avatar,
                     (entityBuilder, propertyBuilder) =>
                     {
-                        propertyBuilder.HasMaxLength(500);
+                        propertyBuilder.HasMaxLength(IdentityUserExtension.AvatarMaxLength);
                     }
                 )
                 .MapEfCoreProperty<IdentityUser, string>(
-                    nameof(MyUsers.Introduction),
+                    IdentityUserExtension.Introduction,
                     (entityBuilder, propertyBuilder) =>
                     {
-                        propertyBuilder.HasMaxLength(500);
+                        propertyBuilder.HasMaxLength(IdentityUserExtension.IntroductionMaxLength);
                     }
                 );
             });

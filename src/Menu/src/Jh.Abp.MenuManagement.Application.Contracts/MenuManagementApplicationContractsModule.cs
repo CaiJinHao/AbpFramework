@@ -11,6 +11,9 @@ namespace Jh.Abp.MenuManagement
         )]
     public class MenuManagementApplicationContractsModule : AbpModule
     {
-
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            MenuManagementDtoExtensions.Configure();
+        }
     }
 }
