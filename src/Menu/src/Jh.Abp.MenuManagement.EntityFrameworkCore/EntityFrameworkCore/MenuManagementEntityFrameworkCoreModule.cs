@@ -5,6 +5,7 @@ using Volo.Abp.Modularity;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Dapper;
 using Jh.Abp.DbContexts;
+using Jh.Abp.Identity.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
@@ -12,7 +13,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
         typeof(MenuManagementDomainModule),
         typeof(AbpEntityFrameworkCoreModule),
         typeof(AbpDapperModule),
-        typeof(AbpDbContextsModule)
+        typeof(AbpDbContextsModule),
+        typeof(JhAbpIdentityEntityFrameworkCoreModule)
     )]
     public class MenuManagementEntityFrameworkCoreModule : AbpModule
     {
