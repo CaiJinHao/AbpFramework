@@ -11,6 +11,7 @@ using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.Identity.Application.Identity
 {
+    //TODO:暂时没有用到重写
     [Dependency(ReplaceServices = true)]
     [ExposeServices(
         typeof(IIdentityUserAppService)
