@@ -542,9 +542,9 @@
                 identityServer:false
             };
             Object.assign(optDefault, opts);
-            if (optDefault.identityServer) {
-                optDefault.url = identityServerApi + optDefault.url;
-            }
+            //if (optDefault.identityServer) {
+            //    optDefault.url = identityServerApi + optDefault.url;
+            //}
             if (optDefault.url.indexOf('http') <0&&optDefault.url.indexOf('/api/') <0) {
                 optDefault.url = baseUrl + optDefault.url;
             }
