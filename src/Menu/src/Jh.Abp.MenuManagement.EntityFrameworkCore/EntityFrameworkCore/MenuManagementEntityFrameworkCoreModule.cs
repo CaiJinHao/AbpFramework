@@ -16,6 +16,11 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
     )]
     public class MenuManagementEntityFrameworkCoreModule : AbpModule
     {
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            MenuManagementEfCoreEntityExtensionMappings.Configure();
+        }
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddAbpDbContext<MenuManagementDbContext>(options =>

@@ -12,7 +12,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<MenuManagementHttpApiHostMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("MenuManagement"));
+                .UseSqlServer(configuration.GetConnectionString("Default"));//MenuManagement
 
             return new MenuManagementHttpApiHostMigrationsDbContext(builder.Options);
         }

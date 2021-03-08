@@ -41,6 +41,7 @@
     <PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="4.0.0" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.Application.Contracts\Jh.Abp.MenuManagement.Application.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.EntityFrameworkCore\Jh.Abp.MenuManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Host.Shared\Jh.Abp.MenuManagement.Host.Shared.csproj" />
   </ItemGroup>
 

@@ -37,32 +37,16 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
                 b.HasIndex(c => c.RoleId).IncludeProperties(p => p.MenuId);//mysql不能使用包含列
             });
 
-            builder.Entity<MyUsers>(b =>
-            {
-                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+            //builder.Entity<MyUsers>(b =>
+            //{
+            //    b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
 
-                b.ConfigureByConvention();
+            //    b.ConfigureByConvention();
 
-                b.Property(x => x.Avatar).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Avatar));
-                b.Property(x => x.Introduction).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Introduction));
+            //    b.Property(x => x.Avatar).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Avatar));
+            //    b.Property(x => x.Introduction).IsRequired(false).HasMaxLength(500).HasColumnName(nameof(MyUsers.Introduction));
 
-            });
-
-            ObjectExtensionManager.Instance
-                .MapEfCoreProperty<IdentityUser, string>(
-                    nameof(MyUsers.Avatar),
-                    (entityBuilder, propertyBuilder) =>
-                    {
-                        propertyBuilder.HasMaxLength(500);
-                    }
-                )
-                .MapEfCoreProperty<IdentityUser, string>(
-                    nameof(MyUsers.Introduction),
-                    (entityBuilder, propertyBuilder) =>
-                    {
-                        propertyBuilder.HasMaxLength(500);
-                    }
-                );
+            //});
         }
     }
 }
