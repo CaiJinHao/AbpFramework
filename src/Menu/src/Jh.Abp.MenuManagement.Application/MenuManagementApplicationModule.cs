@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Jh.Abp.Identity.Application;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
@@ -6,6 +7,7 @@ using Volo.Abp.Modularity;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(JhAbpIdentityApplicationModule),
         typeof(MenuManagementDomainModule),
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpDddApplicationModule),
