@@ -17,16 +17,18 @@ namespace Jh.Abp.MenuManagement.Menus
         private readonly IMenuDapperRepository MenuDapperRepository;
 
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
+        private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
 
-        private IMenuAndRoleMapAppService _menuAndRoleMapAppService;
-        public IMenuAndRoleMapAppService menuAndRoleMapAppService => LazyGetRequiredService(ref _menuAndRoleMapAppService);
-        public ITestRepository testRepository { get; set; }
-
-        public MenuAppService(IMenuRepository repository, IMenuDapperRepository menuDapperRepository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
+        public MenuAppService(IMenuRepository repository,
+            IMenuDapperRepository menuDapperRepository, 
+            IMenuAndRoleMapRepository _menuAndRoleMapRepository,
+            IMenuAndRoleMapAppService _menuAndRoleMapAppService,
+            IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
         {
             menuRepository = repository;
-            menuAndRoleMapRepository = _menuAndRoleMapRepository;
             MenuDapperRepository = menuDapperRepository;
+            menuAndRoleMapRepository = _menuAndRoleMapRepository;
+            menuAndRoleMapAppService = _menuAndRoleMapAppService;
         }
 
         [UnitOfWork]
