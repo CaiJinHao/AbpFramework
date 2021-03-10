@@ -4,7 +4,6 @@ using Volo.Abp.AspNetCore.Mvc;
 
 namespace Jh.Abp.MenuManagement
 {
-    [ApiController]
     public abstract class MenuManagementController : AbpController
     {
         protected MenuManagementController()
