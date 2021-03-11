@@ -25,11 +25,13 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             builder.Entity<Menu>(b =>
             {
+                b.ToTable(options.TablePrefix+ "Menu",options.Schema);
                 b.ConfigureByConvention();
             });
 
             builder.Entity<MenuAndRoleMap>(b =>
             {
+                b.ToTable(options.TablePrefix+ "MenuAndRoleMap", options.Schema);
                 b.ConfigureByConvention();
                 b.Property(p => p.Id).ValueGeneratedOnAdd();
 

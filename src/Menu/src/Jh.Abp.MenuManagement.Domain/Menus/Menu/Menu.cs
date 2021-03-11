@@ -14,7 +14,7 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     [GeneratorClass]
     [Description("菜单")]
-    [Table(MenuManagementDbProperties.BaseDbTablePrefix + "Menu")]
+    [Table("Menu")]
     public class Menu : FullAuditedAggregateRoot<Guid>
     {
         [RetrieveDto]

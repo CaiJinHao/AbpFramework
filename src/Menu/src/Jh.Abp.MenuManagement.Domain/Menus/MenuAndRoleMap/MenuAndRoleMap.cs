@@ -11,7 +11,7 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     [GeneratorClass]
     [Description("菜单和角色映射表")]
-    [Table(MenuManagementDbProperties.BaseDbTablePrefix + "MenuAndRoleMap")]
+    [Table("MenuAndRoleMap")]
     public class MenuAndRoleMap : CreationAuditedEntity<Guid>
     {
         [RetrieveDto]
