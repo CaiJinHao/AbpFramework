@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Jh.Abp.MenuManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Identity;
+using Volo.Abp.Json;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -14,6 +15,7 @@ namespace Jh.Abp.MenuManagement
     /// 系统管理模块(菜单管理)
     /// </summary>
     [DependsOn(
+        typeof(AbpJsonModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityHttpApiModule),

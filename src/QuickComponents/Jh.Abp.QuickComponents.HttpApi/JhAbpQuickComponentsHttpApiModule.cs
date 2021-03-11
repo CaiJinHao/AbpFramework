@@ -2,12 +2,14 @@
 using Localization.Resources.AbpUi;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 
 namespace Jh.Abp.QuickComponents.HttpApi
 {
     [DependsOn(
+        typeof(AbpJsonModule),
         typeof(JhAbpQuickComponentsApplicationContractsModule),
         typeof(JhAbpQuickComponentsApplicationModule),
         typeof(AbpAspNetCoreMvcModule))]
