@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Jh.SourceGenerator</PackageTags>
     <PackageReleaseNotes>Jh.SourceGenerator libs</PackageReleaseNotes>
-    <Version>1.1.1</Version>
+    <Version>1.1.3</Version>
     <Description>Jh.AbpExtensions libs</Description>
   </PropertyGroup>
 
@@ -23,8 +23,19 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="CodeBuilders\Html\Layui\edit.cshtml" />
+    <None Remove="CodeBuilders\Html\Layui\index.cshtml" />
     <None Remove="CodeBuilders\Html\Layui\UiEdit.cshtml" />
     <None Remove="CodeBuilders\Html\Layui\UiIndex.cshtml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="CodeBuilders\Html\Layui\edit.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CodeBuilders\Html\Layui\index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
