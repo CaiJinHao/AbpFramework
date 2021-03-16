@@ -87,7 +87,7 @@ namespace Jh.Abp.Extensions
         {
             await CheckGetListPolicyAsync();
 
-            var query =  CreateFilteredQuery(input,methodStringType);
+            var query = CreateFilteredQuery(input, methodStringType);
 
             var totalCount = await AsyncExecuter.CountAsync(query);
 
