@@ -1,7 +1,9 @@
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.MiniProfiler;
 using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -148,6 +150,9 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddAuthorizeFilter(configuration);
+#if DEBUG
+            context.Services.AddMiniProfilerComponent();
+#endif
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -165,10 +170,14 @@ namespace Jh.Abp.MenuManagement
                 app.UseHsts();
             }
 
+#if DEBUG
+            app.UseMiniProfiler();
+#endif
             app.UseHttpsRedirection();
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
+            app.UseCors(CorsExtensions.DefaultCorsPolicyName);
             //app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             if (MultiTenancyConsts.IsEnabled)
