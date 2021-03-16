@@ -70,12 +70,12 @@ namespace Jh.Abp.MenuManagement.Menus
         [UnitOfWork]
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            /*var data = await MenuDapperRepository.GetDapperListAsync();
+            var data = await MenuDapperRepository.GetDapperListAsync();
             if (data != null)
             {
                 var c = await menuDtoRepository.GetDtoDapperListAsync();
                 var d = await MenuDapperRepository.GetDtoListAsync();
-            }*/
+            }
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;

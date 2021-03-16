@@ -24,8 +24,8 @@
   
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
-    <PackageReference Include="Volo.Abp.Core" Version="4.1.0" />
-    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.1.0" />
+    <PackageReference Include="Volo.Abp.Core" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
