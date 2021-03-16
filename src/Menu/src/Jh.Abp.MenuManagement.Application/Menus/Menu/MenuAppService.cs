@@ -18,6 +18,7 @@ namespace Jh.Abp.MenuManagement.Menus
 
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
         private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
+        public IMenuDtoRepository menuDtoRepository { get; set; }
 
         public MenuAppService(IMenuRepository repository,
             IMenuDapperRepository menuDapperRepository, 
@@ -62,10 +63,11 @@ namespace Jh.Abp.MenuManagement.Menus
         [UnitOfWork]
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            /*var data = MenuDapperRepository.GetDapperListAsync().Result;
+            /*var data = await MenuDapperRepository.GetDapperListAsync();
             if (data != null)
             {
-                var c = menuRepository.GetDapperListAsync().Result;
+                var c = await menuDtoRepository.GetDtoDapperListAsync();
+                var d = await MenuDapperRepository.GetDtoListAsync();
             }*/
             // 多数据库连接测试
             /*var data= await testRepository.GetEmailsAsync();
