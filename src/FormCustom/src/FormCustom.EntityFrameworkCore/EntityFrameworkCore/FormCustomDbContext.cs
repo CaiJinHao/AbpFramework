@@ -11,6 +11,9 @@ namespace FormCustom.EntityFrameworkCore
          * public DbSet<Question> Questions { get; set; }
          */
 
+        public DbSet<Form> Forms { get; set; }
+        public DbSet<FormField> FormFields { get; set; }
+
         public FormCustomDbContext(DbContextOptions<FormCustomDbContext> options) 
             : base(options)
         {

@@ -27,17 +27,6 @@ namespace FormCustom
 		[RetrieveDto]
 		[MaxLength(100)]
 		[CreateOrUpdateInputDto]
-		[Description("表名称")]
-		public string TableName
-		{
-			get;
-			set;
-		}
-
-		[Required]
-		[RetrieveDto]
-		[MaxLength(100)]
-		[CreateOrUpdateInputDto]
 		[Description("显示名称")]
 		public string DisplayName
 		{
@@ -56,6 +45,18 @@ namespace FormCustom
 		}
 		
         public Guid? TenantId { get; protected set; }
+
+		//########表结构相关###########
+		[Required]
+		[RetrieveDto]
+		[MaxLength(100)]
+		[CreateOrUpdateInputDto]
+		[Description("表名称")]
+		public string TableName
+		{
+			get;
+			set;
+		}
 
 		protected Form(Guid? tenantId = null)
 		{

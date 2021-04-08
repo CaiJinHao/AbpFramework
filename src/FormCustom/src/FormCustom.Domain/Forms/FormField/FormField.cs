@@ -60,6 +60,26 @@ namespace FormCustom
         [Description("默认值")]
         public string DefaultValue { get; set; }
 
+        [Required]
+        [CreateOrUpdateInputDto]
+        [Description("是否只读")]
+        public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// 这里只控制表单必填，不做数据库控制必填
+        /// </summary>
+        [Required]
+        [CreateOrUpdateInputDto]
+        [Description("是否必填")]
+        public bool IsRequired { get; set; }
+
+        [CreateOrUpdateInputDto]
+        [MaxLength(200)]
+        [Description("正则校验表达式")]
+        public string Regx { get; set; }
+
+        //########表结构相关###########
+
         /// <summary>
         /// 0 不限长度
         /// </summary>
@@ -80,28 +100,5 @@ namespace FormCustom
         [CreateOrUpdateInputDto]
         [Description("字段类型")]
         public string FieldType { get; set; }
-
-        [Required]
-        [CreateOrUpdateInputDto]
-        [Description("是否只读")]
-        public bool IsReadOnly { get; set; }
-
-        [Required]
-        [CreateOrUpdateInputDto]
-        [Description("是否必填")]
-        public bool IsRequired { get; set; }
-
-        /// <summary>
-        /// 注意考虑必填情况禁用问题
-        /// </summary>
-        [Required]
-        [CreateOrUpdateInputDto]
-        [Description("是否禁用")]
-        public bool IsDisabled { get; set; }
-
-        [CreateOrUpdateInputDto]
-        [MaxLength(200)]
-        [Description("正则校验表达式")]
-        public string Regx { get; set; }
     }
 }
