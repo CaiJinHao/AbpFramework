@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 using System.IO;
@@ -17,7 +18,10 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
@@ -150,9 +154,18 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddAuthorizeFilter(configuration);
+            context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
 #endif
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.ApplicationName = "MunuManagement";
+                options.IsEnabledForGetRequests = true;
+                options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -195,11 +208,13 @@ namespace Jh.Abp.MenuManagement
             //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
             //});
+#if DEBUG
             app.UseJhSwagger(context.GetConfiguration(),this.GetType());
+#endif
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            SeedData(context);
+            //SeedData(context);
         }
 
         private void SeedData(ApplicationInitializationContext context)

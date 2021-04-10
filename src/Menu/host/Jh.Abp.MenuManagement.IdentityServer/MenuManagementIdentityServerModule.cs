@@ -123,6 +123,8 @@ namespace Jh.Abp.MenuManagement
             {
                 //options.IsEnabledForGetRequests = true;
                 options.ApplicationName = "AuthServer";
+                options.IsEnabledForAnonymousUsers = false;
+                options.EntityHistorySelectors.AddAllEntities();
             });
 
             Configure<AppUrlOptions>(options =>

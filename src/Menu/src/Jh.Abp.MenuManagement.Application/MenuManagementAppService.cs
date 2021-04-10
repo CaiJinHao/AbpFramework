@@ -1,5 +1,6 @@
 ﻿using Jh.Abp.MenuManagement.Localization;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {

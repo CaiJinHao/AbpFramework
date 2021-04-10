@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using System.Linq;
 using Volo.Abp.Users;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {

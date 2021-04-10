@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Dapper;
 using Jh.Abp.DbContexts;
 using Jh.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.AuditLogging;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {

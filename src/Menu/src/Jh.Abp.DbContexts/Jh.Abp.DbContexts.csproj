@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Dapper" Version="4.0.2" />
-    <PackageReference Include="Volo.Abp.Data" Version="4.0.2" />
+    <PackageReference Include="Volo.Abp.Dapper" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Data" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>

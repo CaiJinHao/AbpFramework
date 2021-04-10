@@ -12,7 +12,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.2.1</Version>
+    <Version>1.2.3</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 
@@ -49,9 +49,5 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="v1\App\" />
   </ItemGroup>
 </Project>

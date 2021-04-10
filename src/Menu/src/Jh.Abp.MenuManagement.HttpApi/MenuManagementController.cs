@@ -1,6 +1,7 @@
 ﻿using Jh.Abp.MenuManagement.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
