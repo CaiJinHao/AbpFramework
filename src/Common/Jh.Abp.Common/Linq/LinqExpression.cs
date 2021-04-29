@@ -40,7 +40,11 @@ namespace Jh.Abp.Common.Linq
         /// <returns></returns>
         public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto,string methodStringType= "Equals")
         {
-            Expression resultFilters = null;
+            if (inputDto == null)
+            {
+                throw new ArgumentNullException(nameof(inputDto));
+            }
+            Expression? resultFilters = null;
             //1.创建参数表达式
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TSource), "a");
             var sourcePropertyInfosNames = typeof(TSource).GetProperties().Select(a => a.Name);
@@ -58,10 +62,10 @@ namespace Jh.Abp.Common.Linq
                 }
                 //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
                 //2.创建属性表达式
+                MethodInfo? method = null;
                 Expression proerty = Expression.Property(parameterExpression, item.Name);
                 var propertyType = propertyVal.GetType();
                 var valueType = ObjectExtensions.GetObjectType(propertyType);
-                MethodInfo method = null;
                 switch (valueType)
                 {
                     case Enums.ObjectType.Enum:
@@ -83,6 +87,7 @@ namespace Jh.Abp.Common.Linq
                     case Enums.ObjectType.Double:
                     case Enums.ObjectType.Decimal:
                         {
+                            //TODO: 可修改为可空类型，这样就可以查询为0的值了，需要修改代码生成器，也可以查询bool值
                             var t = propertyVal.ToString();
                             if (t.Equals("0"))
                             {
@@ -137,6 +142,35 @@ namespace Jh.Abp.Common.Linq
             //5.创建Lambda表达式
             var lambda = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
             return lambda;
+        }
+
+        /// <summary>
+        /// 将IQueryable转为Expression<Func<TSource, bool>>
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="inputQuery">不支持分页和排序</param>
+        /// <returns></returns>
+        public static Expression<Func<TSource, bool>> ToExpression<TSource>(this IQueryable<TSource> inputQuery)
+        {
+            return inputQuery.Expression != null && inputQuery.Expression is MethodCallExpression methodCallExpression ? GetMethodCallExpression<TSource>(methodCallExpression) : f => true;
+        }
+
+        /// <summary>
+        /// 获取查询表达式
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="methodCallExpression"></param>
+        /// <returns></returns>
+        private static Expression<Func<TSource, bool>> GetMethodCallExpression<TSource>(MethodCallExpression methodCallExpression)
+        {
+            if (methodCallExpression.Arguments.Any(a => a.NodeType == ExpressionType.Extension))
+            {
+                var unary = methodCallExpression.Arguments.LastOrDefault(a => a.NodeType == ExpressionType.Quote);
+                var exp = unary != null && unary is UnaryExpression unaryExpression ? unaryExpression.Operand : null;
+                return exp != null && exp is Expression<Func<TSource, bool>> _exp ? _exp : f => true;
+            }
+            var _methodExpression = methodCallExpression.Arguments.FirstOrDefault(a => a.NodeType == ExpressionType.Call);
+            return _methodExpression != null && _methodExpression is MethodCallExpression _mexp ? GetMethodCallExpression<TSource>(_mexp) : f => true;
         }
 
 

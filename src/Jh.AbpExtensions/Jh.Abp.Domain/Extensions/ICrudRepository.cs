@@ -46,5 +46,12 @@ namespace Jh.Abp.Domain.Extensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 获取DbSet
+        /// </summary>
+        /// <param name="includeDetails"></param>
+        /// <returns></returns>
+        Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false);
     }
 }

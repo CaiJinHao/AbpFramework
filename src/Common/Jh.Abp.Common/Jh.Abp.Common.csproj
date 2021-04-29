@@ -2,17 +2,18 @@
 
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>KimHo</Authors>
-    <Company>KimHo</Company>
-    <Copyright>KimHo</Copyright>
+    <Authors>CaiJinHao</Authors>
+    <Company>CaiJinHao</Company>
+    <Copyright>CaiJinHao</Copyright>
     <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Common</PackageTags>
     <PackageReleaseNotes>Common libs</PackageReleaseNotes>
-    <Version>1.1.4</Version>
+    <Version>2.0.0.4</Version>
     <Description>Common libs</Description>
   </PropertyGroup>
   <ItemGroup>

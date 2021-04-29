@@ -58,10 +58,11 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        [Route("list")]
+        [Route("all")]
         [HttpGet]
         public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
         {
+            inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
         }
 
@@ -125,8 +126,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet("Trees")]
         public async Task<dynamic> GetMenusNavTreesAsync()
         {
-            var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
-            var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync(new Guid(roleid.Value));
+            var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync();
             return new { items };
         }
 

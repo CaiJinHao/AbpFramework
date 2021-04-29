@@ -21,10 +21,26 @@ namespace Jh.Abp.MenuManagement.Menus
             MenuDapperRepository = menuDapperRepository;
         }
 
-        public async Task<IEnumerable<Menu>> GetDapperListAsync()
+        public Task<IEnumerable<Menu>> GetDapperListAsync()
         {
             throw new Exception("not use dto");
         }
+
+        /*public IIdentityDbContext identityDbContext { get; set; }
+        public async Task GetTestJoinQueryAsync()
+        {
+            var memberInfo = (await GetDbSetAsync()).ToList();
+            var mids = memberInfo.Select(a => a.UserId);
+            var users = identityDbContext.Users.Where(a => mids.Contains(a.Id)).ToList();
+            var query = from m in memberInfo
+                        join u in identityDbContext.Users on m.UserId equals u.Id
+                        select new
+                        {
+                            m.FullName,
+                            u.Name
+                        };
+            var result = query.ToList();
+        }*/
     }
 
     /// <summary>

@@ -37,10 +37,27 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
+using System;
+using Volo.Abp.Json;
+using Volo.Abp.Authorization.Permissions;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.Auditing;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Swagger;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.JwtAuthentication;
+using Microsoft.Extensions.Configuration;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpQuickComponentsModule),
         typeof(MenuManagementWebModule),
         typeof(MenuManagementApplicationModule),
         typeof(MenuManagementEntityFrameworkCoreModule),
@@ -90,6 +107,7 @@ namespace Jh.Abp.MenuManagement
                 });
             }
 
+            context.Services.AddApiVersion();
             context.Services.AddSwaggerGen(
                 options =>
                 {
@@ -97,6 +115,7 @@ namespace Jh.Abp.MenuManagement
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
                 });
+
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -116,6 +135,81 @@ namespace Jh.Abp.MenuManagement
             {
                 options.IsEnabled = MultiTenancyConsts.IsEnabled;
             });
+
+            Configure<AbpJsonOptions>(options =>
+            {
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            });
+
+            context.Services.AddSession(o =>
+            {
+                o.IdleTimeout = TimeSpan.FromSeconds(60 * 60);
+            });
+
+            /*Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy(RoleConsts.OpenAccountPolicy, policy => policy.RequireAssertion(context => {
+                    var authorizationResult = context.User.Claims.Any(c =>
+                        c.Type == JhJwtClaimTypes.RoleId && RoleConsts.OpenAccountPolicyRoles.Contains(c.Value)
+                    );
+                    if (!authorizationResult)
+                    {
+                        if (context.Resource is DefaultHttpContext httpContext && httpContext.Session != null)
+                        {
+                            httpContext.Session.SetString("PolicyName", RoleConsts.OpenAccountPolicy);
+                        }
+                    }
+                    return authorizationResult;
+                }));
+
+                options.AddPolicy(RoleConsts.AuthenticationPolicy, policy => policy.RequireAssertion(context => {
+                    var authorizationResult = context.User.Claims.Any(c =>
+                        c.Type == JhJwtClaimTypes.RoleId && RoleConsts.AuthenticationPolicyRoles.Contains(c.Value)
+                    );
+                    if (!authorizationResult)
+                    {
+                        if (context.Resource is DefaultHttpContext httpContext && httpContext.Session != null)
+                        {
+                            httpContext.Session.SetString("PolicyName", RoleConsts.AuthenticationPolicy);
+                        }
+                    }
+                    return authorizationResult;
+                }));
+            });*/
+
+            //禁用http验证cookies xsf
+            /*  Configure<AbpAntiForgeryOptions>(options => {
+                  options.AutoValidate = false;
+              });*/
+
+            /* context.Services.ConfigureApplicationCookie(options =>
+             {
+                 options.LoginPath = "/Login";
+                 options.AccessDeniedPath = "/AccessDenied";
+             });*/
+
+            //禁用审计日志
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.IsEnabled = false;
+                options.ApplicationName = "MenuManagementApplication";
+                options.IsEnabledForAnonymousUsers = false;
+                options.IsEnabledForGetRequests = true;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
+            });
+
+            context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
+            context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
+            context.Services.AddLocalizationComponent();
+            context.Services.AddAuthorizeFilter(configuration);
+            //是否将错误发送到客户端
+#if DEBUG
+            context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            });
+#endif
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -129,10 +223,12 @@ namespace Jh.Abp.MenuManagement
             }
             else
             {
+                //app.UseExceptionHandler("/Error");
                 app.UseErrorPage();
                 app.UseHsts();
             }
 
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseVirtualFiles();
             app.UseRouting();
@@ -143,28 +239,35 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
-            app.UseAbpRequestLocalization();
+            app.UseJhRequestLocalization();
             app.UseAuthorization();
 
+#if DEBUG
             app.UseSwagger();
             app.UseAbpSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
             });
+#endif
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseConfiguredEndpoints();
-
-            using (var scope = context.ServiceProvider.CreateScope())
+            app.UseConfiguredEndpoints().UseEndpoints(endpoints =>
             {
-                AsyncHelper.RunSync(async () =>
-                {
-                    await scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>()
-                        .SeedAsync();
-                });
-            }
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            //using (var scope = context.ServiceProvider.CreateScope())
+            //{
+            //    AsyncHelper.RunSync(async () =>
+            //    {
+            //        await scope.ServiceProvider
+            //            .GetRequiredService<IDataSeeder>()
+            //            .SeedAsync();
+            //    });
+            //}
         }
     }
 }

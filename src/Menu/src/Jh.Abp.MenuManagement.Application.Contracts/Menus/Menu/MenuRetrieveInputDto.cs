@@ -7,7 +7,7 @@ namespace Jh.Abp.MenuManagement.Menus
     /// <summary>
     /// 只存放需要查询的字段
     /// </summary>
-    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IFullRetrieveDto<Menu>
+    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IMethodDto<Menu>, IRetrieveDelete
     {
         /// <summary>
         /// 菜单编号
@@ -23,7 +23,10 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 上级菜单编号，顶级可为null
         /// </summary>
         public string ParentCode { get; set; }
-        public int Deleted { get; set; }
+
+        public int? Deleted { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }
     }
 }

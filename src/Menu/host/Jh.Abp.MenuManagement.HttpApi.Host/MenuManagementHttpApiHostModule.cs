@@ -148,11 +148,25 @@ namespace Jh.Abp.MenuManagement
             //    });
             //});
 
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.ApplicationName = "MunuManagement";
+                options.IsEnabledForGetRequests = true;
+                options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
+            });
+
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
-
+            
+            context.Services.AddApiVersion();
+            context.Services.AddSwaggerComponent(configuration);
+            context.Services.AddCorsPolicy(configuration);
+            context.Services.AddLocalizationComponent();
+            context.Services.AddJwtAuthenticationComponent(configuration);
             context.Services.AddAuthorizeFilter(configuration);
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
@@ -214,7 +228,7 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            //SeedData(context);
+            SeedData(context);
         }
 
         private void SeedData(ApplicationInitializationContext context)
@@ -226,7 +240,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "0B765876-E52C-F42D-0B80-39FB230649FE";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "F5CB4B1F-CFD5-5087-ECE6-39FC1ACB9234";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });

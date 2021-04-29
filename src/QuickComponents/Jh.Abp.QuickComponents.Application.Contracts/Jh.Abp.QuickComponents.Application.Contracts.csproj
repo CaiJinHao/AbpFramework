@@ -2,16 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>KimHo</Authors>
-    <Company>KimHo</Company>
-    <Copyright>KimHo</Copyright>
+    <Authors>CaiJinHao</Authors>
+    <Company>CaiJinHao</Company>
+    <Copyright>CaiJinHao</Copyright>
     <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.2.3</Version>
+    <Version>1.2.4.7</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
     <ItemGroup>
@@ -22,9 +24,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.0.2" />
-    <PackageReference Include="Volo.Abp.Validation" Version="4.0.2" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.0.2" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Validation" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="4.2.2" />
   </ItemGroup>
 
 

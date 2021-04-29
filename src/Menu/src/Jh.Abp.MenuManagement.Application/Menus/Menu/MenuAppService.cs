@@ -5,7 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Repositories;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Uow;
+using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Common.Linq;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -17,6 +24,7 @@ namespace Jh.Abp.MenuManagement.Menus
         private readonly IMenuDapperRepository MenuDapperRepository;
 
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
+
         private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
         public IMenuDtoRepository menuDtoRepository { get; set; }
 
