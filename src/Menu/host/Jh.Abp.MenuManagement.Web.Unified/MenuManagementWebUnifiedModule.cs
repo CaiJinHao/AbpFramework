@@ -202,7 +202,8 @@ namespace Jh.Abp.MenuManagement
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
             context.Services.AddLocalizationComponent();
-            context.Services.AddAuthorizeFilter(configuration);
+            //context.Services.AddAuthorizeFilter(configuration);
+            context.Services.AddAuthorizeOidc(configuration);
             //是否将错误发送到客户端
 #if DEBUG
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>

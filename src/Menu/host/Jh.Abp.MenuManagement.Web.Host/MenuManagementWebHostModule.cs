@@ -48,6 +48,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.QuickComponents.Swagger;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -90,6 +91,7 @@ namespace Jh.Abp.MenuManagement
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
 
+            context.Services.AddApiVersion();
             ConfigureMenu(configuration);
             ConfigureCache(configuration);
             ConfigureUrls(configuration);
