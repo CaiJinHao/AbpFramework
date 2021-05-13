@@ -48,26 +48,26 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
                 options.DefaultScheme = "Cookies";
                 options.DefaultChallengeScheme = "oidc";
             })
-            .AddCookie("Cookies", options =>
-            {
-                options.ExpireTimeSpan = TimeSpan.FromDays(365);
-            })
-            .AddAbpOpenIdConnect("oidc", options =>
-            {
-                options.Authority = configuration["AuthServer:Authority"];
-                options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+                .AddCookie("Cookies", options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(365);
+                })
+                .AddAbpOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = configuration["AuthServer:Authority"];
+                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
 
-                options.ClientId = configuration["AuthServer:ClientId"];
-                options.ClientSecret = configuration["AuthServer:ClientSecret"];
+                    options.ClientId = configuration["AuthServer:ClientId"];
+                    options.ClientSecret = configuration["AuthServer:ClientSecret"];
 
-                options.SaveTokens = true;
-                options.GetClaimsFromUserInfoEndpoint = true;
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
 
-                options.Scope.Add("role");
-                options.Scope.Add("email");
-                options.Scope.Add("phone");
-            });
+                    options.Scope.Add("role");
+                    options.Scope.Add("email");
+                    options.Scope.Add("phone");
+                });
 
             return services;
         }

@@ -53,6 +53,7 @@ using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Microsoft.Extensions.Configuration;
+using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -61,6 +62,7 @@ namespace Jh.Abp.MenuManagement
         typeof(MenuManagementWebModule),
         typeof(MenuManagementApplicationModule),
         typeof(MenuManagementEntityFrameworkCoreModule),
+        typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpAccountWebModule),
